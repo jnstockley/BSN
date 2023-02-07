@@ -4,6 +4,7 @@ import time
 import logging
 import datetime
 import traceback
+import argparse
 
 import secrets
 from helper.data import read, write
@@ -19,19 +20,29 @@ logger = logging.getLogger("BSN")
 
 
 def main():
-    os.makedirs("logs/", exist_ok=True)
+    parser = setup_args()
+    args = parser.parse_args()
+
+    if os.path.exists(args.folder):
+        print()
+        root_dir = args.folder
+    else:
+        logger.critical(f"{args.folder} is not a valid path!")
+        exit(1)
+
+    os.makedirs(f"{root_dir}/logs/", exist_ok=True)
 
     logging.basicConfig(
         level=logging.DEBUG,
         format="[%(asctime)s] %(levelname)s %(name)s:%(funcName)s:%(lineno)s - %(message)s",
         datefmt="%Y-%m-%d %I:%M:%S %p",
         handlers=[
-            logging.FileHandler(f"logs/BSN-{datetime.datetime.now()}.log"),
+            logging.FileHandler(f"{root_dir}/logs/BSN-{datetime.datetime.now()}.log"),
             logging.StreamHandler(),
         ],
     )
 
-    file = "data/youtube/uploads.json"
+    file = f"{root_dir}/data/youtube/uploads.json"
 
     notification = Notification(secrets.notifications)
 
@@ -51,6 +62,14 @@ def main():
 
         logger.info("Sleeping for 10 seconds...")
         time.sleep(10)
+
+
+def setup_args() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-f', '--folder', help='Full path to the folder to store data files and log files')
+
+    return parser
 
 
 def exception_handler(type, value, tb):
