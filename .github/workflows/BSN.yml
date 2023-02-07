@@ -30,9 +30,6 @@ jobs:
         curl -sSL https://install.python-poetry.org | python3 -
         echo "${{ env.HOME }}/.local/bin" >> $GITHUB_PATH
 
-    - name: View poetry --help
-      run: poetry --help
-
     - name: Install dependencies
       shell: bash
       run: poetry install --with dev
@@ -40,3 +37,9 @@ jobs:
    # - name: Test with pytest
    #   run: |
    #     python -m poetry run python -m pytest -v tests
+   
+    - name: Build & Publish to PyPi
+      run: |
+        poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+        poetry build
+        poetry publish
