@@ -31,7 +31,7 @@ class YouTubeChannels:
         channel_ids = list(channels.keys())
 
         split_channel_ids = [
-            channel_ids[i : i + 50] for i in range(0, len(channel_ids), 50)
+            channel_ids[i:i + 50] for i in range(0, len(channel_ids), 50)
         ]
 
         for split_channels in split_channel_ids:
@@ -61,7 +61,8 @@ class YouTubeChannels:
             part="contentDetails,statistics,snippet", id=channel_ids, maxResults=50
         )
 
-        logger.debug(f"Getting Data from YouTube API for channels: {channel_ids}")
+        logger.debug(
+            f"Getting Data from YouTube API for channels: {channel_ids}")
 
         return request.execute()["items"]
 
@@ -73,7 +74,8 @@ class YouTubeChannel:
         self.previous_upload_id = previous_uploads[self.channel_id]["upload_id"]
         self.current_upload_id = self.previous_upload_id
         self.previous_upload_amount = previous_uploads[self.channel_id]["uploads"]
-        self.current_upload_amount = int(channel_data["statistics"]["videoCount"])
+        self.current_upload_amount = int(
+            channel_data["statistics"]["videoCount"])
         self.channel_name = channel_data["snippet"]["title"]
         self.latest_upload = None
         if self.current_upload_amount > self.previous_upload_amount:
@@ -140,9 +142,9 @@ class YouTubeUpload:
             previous = now - timedelta(minutes=10)
 
             if not (
-                previous.replace(tzinfo=None)
-                < self.uploaded_at.replace(tzinfo=None)
-                < now.replace(tzinfo=None)
+                    previous.replace(tzinfo=None)
+                    < self.uploaded_at.replace(tzinfo=None)
+                    < now.replace(tzinfo=None)
             ):
                 logger.warning(
                     f"{self.upload_id} not uploaded within 10 minutes, trying again"
@@ -153,7 +155,8 @@ class YouTubeUpload:
                 self.tries = 0
                 break
         if self.tries != 3:
-            self.uploaded_at = self.uploaded_at.strftime("%b %d, %Y - %I:%M %p")
+            self.uploaded_at = self.uploaded_at.strftime(
+                "%b %d, %Y - %I:%M %p")
             self.title = upload_data["snippet"]["localized"]["title"]
             self.length = isodate.parse_duration(
                 upload_data["contentDetails"]["duration"]

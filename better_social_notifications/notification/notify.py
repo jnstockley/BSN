@@ -35,7 +35,8 @@ class Notification:
             self.body = self.__setup_youtube_body__(youtube_upload)
             logger.debug(f"Notification Object updated: {self}")
         elif "youtube_livestream" in kwargs:
-            youtube_livestream = list[YouTubeChannel](kwargs["youtube_livestream"])
+            youtube_livestream = list[YouTubeChannel](
+                kwargs["youtube_livestream"])
             verb = "has" if len(youtube_livestream) == 1 else "have"
             self.title = (
                 f'{", ".join([channel.channel_name for channel in youtube_livestream])} {verb}'
