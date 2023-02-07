@@ -54,8 +54,8 @@ jobs:
         run: poetry install --with dev
       - name: Run Tests
         run: |
-          poetry run coverage run -m pytest
-          poetry run coverage report
+          poetry run coverage run --branch -m pytest
+        #  poetry run coverage report
 
 
 
