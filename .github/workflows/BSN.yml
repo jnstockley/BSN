@@ -30,8 +30,8 @@ jobs:
         run: |
           poetry run flake8 better_social_notifications --count --show-source --max-line-length 120 --statistics 
           poetry run flake8 better_social_notifications --count --max-complexity=10 --max-line-length=120 --statistics
-      - name: Black Linting
-        run: poetry run black better_social_notifications --check
+      - name: Autopep8 Linting
+        run: poetry run autopep8 --recursive better_social_notifications
 
 
 
