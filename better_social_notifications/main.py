@@ -10,36 +10,34 @@ from helper.data import read, write
 from notification.notify import Notification
 from youtube.uploads import YouTubeChannels
 
-'''
-    TODO
-    1. Add comments for 
-    '''
+"""
+TODO
+1. Add comments for
+"""
 
 logger = logging.getLogger("BSN")
 
 
 def main():
-
-    os.makedirs('logs/', exist_ok=True)
+    os.makedirs("logs/", exist_ok=True)
 
     logging.basicConfig(
         level=logging.DEBUG,
         format="[%(asctime)s] %(levelname)s %(name)s:%(funcName)s:%(lineno)s - %(message)s",
-        datefmt='%Y-%m-%d %I:%M:%S %p',
+        datefmt="%Y-%m-%d %I:%M:%S %p",
         handlers=[
-            logging.FileHandler(f'logs/BSN-{datetime.datetime.now()}.log'),
-            logging.StreamHandler()
-        ]
+            logging.FileHandler(f"logs/BSN-{datetime.datetime.now()}.log"),
+            logging.StreamHandler(),
+        ],
     )
 
-    file = 'data/youtube/uploads.json'
+    file = "data/youtube/uploads.json"
 
     notification = Notification(secrets.notifications)
 
     notification.create(starting_message=True).send()
 
     while True:
-
         channels = YouTubeChannels(read(file))
 
         if len(channels.uploads) > 0:
@@ -60,6 +58,6 @@ def exception_handler(type, value, tb):
     logging.error("".join(traceback.format_exception(type, value, tb)))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.excepthook = exception_handler
     main()

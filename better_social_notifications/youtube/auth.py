@@ -9,7 +9,6 @@ logger = logging.getLogger(f"BSN:{__name__}")
 
 
 class APIKey:
-
     def __init__(self, key: str):
         self.key: str = key
 
@@ -26,16 +25,17 @@ class APIKey:
         and checks if the API is valid or not
         :return: True if the provided API is valid, False otherwise
         """
-        youtube = googleapiclient.discovery.build("youtube", "v3", developerKey=self.key)
+        youtube = googleapiclient.discovery.build(
+            "youtube", "v3", developerKey=self.key
+        )
 
         request: HttpRequest = youtube.channels().list(
-            part="id",
-            id="UC_x5XG1OV2P6uZZ5FSM9Ttw"
+            part="id", id="UC_x5XG1OV2P6uZZ5FSM9Ttw"
         )
 
         try:
             response: dict = request.execute()
-            return response['items'][0]['id'] == "UC_x5XG1OV2P6uZZ5FSM9Ttw"
+            return response["items"][0]["id"] == "UC_x5XG1OV2P6uZZ5FSM9Ttw"
         except HttpError as e:
             logger.warning(f"{self} is not a valid YouTube Data V3 API Key")
             logger.warning(e)
@@ -45,7 +45,6 @@ class APIKey:
 
 
 class APIKeys:
-
     def __init__(self, keys: list[str]):
         """
         Accepts a list of YouTube Data V3 API Keys, ensures they are valid, and appends
