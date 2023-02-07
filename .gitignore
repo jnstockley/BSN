@@ -200,3 +200,5 @@ pip-wheel-metadata
 /poetry.toml
 
 poetry/core/*
+
+linting.sh
