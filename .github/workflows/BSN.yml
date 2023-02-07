@@ -32,6 +32,15 @@ jobs:
           poetry run flake8 better_social_notifications --count --max-complexity=10 --max-line-length=120 --statistics
       - name: Autopep8 Linting
         run: poetry run autopep8 --dif --recursive better_social_notifications
+  
+  Testing:
+    runs-on: ubuntu-latest
+    needs: Linting
+    steps:
+      - name: Test Poetry
+        run: |
+          python --version
+          poetry --version
 
 
 
