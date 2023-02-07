@@ -3,6 +3,9 @@ name: Python application
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - '.github/**'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
