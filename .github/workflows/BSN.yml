@@ -52,10 +52,10 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: poetry install --with dev
-      - name: Test Poetry
+      - name: Run Tests
         run: |
-          python --version
-          poetry --version
+          poetry run coverage run --branch -m pytest
+        #  poetry run coverage report
 
 
 
