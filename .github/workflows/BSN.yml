@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  linting:
+  Linting:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch
@@ -30,8 +30,8 @@ jobs:
         run: |
           poetry run flake8 better_social_notifications --count --show-source --max-line-length 120 --statistics 
           poetry run flake8 better_social_notifications --count --max-complexity=10 --max-line-length=120 --statistics
-      - name: PyLint Linting
-        run: poetry run pylint better_social_notifications
+      - name: Black Linting
+        run: poetry run black better_social_notifications --check
 
 
 
