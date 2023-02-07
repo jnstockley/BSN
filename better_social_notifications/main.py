@@ -37,7 +37,8 @@ def main():
         format="[%(asctime)s] %(levelname)s %(name)s:%(funcName)s:%(lineno)s - %(message)s",
         datefmt="%Y-%m-%d %I:%M:%S %p",
         handlers=[
-            logging.FileHandler(f"{root_dir}/logs/BSN-{datetime.datetime.now()}.log"),
+            logging.FileHandler(
+                f"{root_dir}/logs/BSN-{datetime.datetime.now()}.log"),
             logging.StreamHandler(),
         ],
     )
@@ -67,7 +68,8 @@ def main():
 def setup_args() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-f', '--folder', help='Full path to the folder to store data files and log files')
+    parser.add_argument(
+        '-f', '--folder', help='Full path to the folder to store data files and log files')
 
     return parser
 
