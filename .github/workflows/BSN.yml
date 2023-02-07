@@ -55,7 +55,7 @@ jobs:
       - name: Run Tests
         run: |
           poetry run coverage run --branch -m pytest
-        #  poetry run coverage report
+          poetry run coverage report
 
 
 
