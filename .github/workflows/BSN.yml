@@ -61,7 +61,7 @@ jobs:
           poetry run coverage report
           
   Deploy:
-    if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     needs: Testing
     steps:
