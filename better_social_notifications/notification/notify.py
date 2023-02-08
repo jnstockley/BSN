@@ -2,7 +2,7 @@ import apprise
 import logging
 from apprise import Apprise, NotifyFormat
 
-from youtube.uploads import YouTubeChannel
+from better_social_notifications.youtube.uploads import YouTubeChannel
 
 logger = logging.getLogger(f"BSN:{__name__}")
 

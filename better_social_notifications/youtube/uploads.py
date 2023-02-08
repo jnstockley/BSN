@@ -3,21 +3,22 @@ from datetime import datetime, timedelta
 
 import pytz
 
-import secrets
 import logging
 import isodate
 from dateutil import parser
 from googleapiclient.http import HttpRequest
 
-from youtube.auth import create_youtube_service, APIKeys
+from better_social_notifications.youtube.auth import create_youtube_service, APIKeys
 
 logger = logging.getLogger(f"BSN:{__name__}")
 
 
 class YouTubeChannels:
-    keys = APIKeys(secrets.yt_api_keys)
+    keys = None
 
-    def __init__(self, channels: dict):
+    def __init__(self, channels: dict, keys: APIKeys):
+        YouTubeChannels.keys = keys
+
         self.channels: list[YouTubeChannel] = []
 
         self.uploads: list[YouTubeChannel] = []
