@@ -4,7 +4,6 @@ version = "2.0.0-alpha3"
 description = ""
 authors = ["Jack Stockley <34308937+jnstockley@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "secrets"]
 
 [tool.poetry.group.dev]
 optional = true
