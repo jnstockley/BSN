@@ -6,10 +6,10 @@ import datetime
 import traceback
 import argparse
 
-import secrets
-from helper.data import read, write
-from notification.notify import Notification
-from youtube.uploads import YouTubeChannels
+from better_social_notifications.helper.data import read, write
+from better_social_notifications.notification.notify import Notification
+from better_social_notifications.youtube.uploads import YouTubeChannels
+from better_social_notifications.youtube.auth import APIKeys
 
 """
 TODO
@@ -19,7 +19,9 @@ TODO
 logger = logging.getLogger("BSN")
 
 
-def main():
+def run():
+    sys.excepthook = exception_handler
+
     parser = setup_args()
     args = parser.parse_args()
 
@@ -31,6 +33,8 @@ def main():
         exit(1)
 
     os.makedirs(f"{root_dir}/logs/", exist_ok=True)
+
+    secrets = read(f"{root_dir}/data/secrets.json")
 
     logging.basicConfig(
         level=logging.DEBUG,
@@ -45,12 +49,14 @@ def main():
 
     file = f"{root_dir}/data/youtube/uploads.json"
 
-    notification = Notification(secrets.notifications)
+    notification = Notification(secrets["notifications"])
 
     notification.create(starting_message=True).send()
 
+    keys = APIKeys(secrets["yt_api_keys"])
+
     while True:
-        channels = YouTubeChannels(read(file))
+        channels = YouTubeChannels(read(file), keys)
 
         if len(channels.uploads) > 0:
             notification.create(youtube_upload=channels.uploads).send()
@@ -80,5 +86,4 @@ def exception_handler(type, value, tb):
 
 
 if __name__ == "__main__":
-    sys.excepthook = exception_handler
-    main()
+    run()
